@@ -7,10 +7,7 @@ import java.util.List;
 
 @Repository
 public class TaskRepository {
-//    private static final Logger log = LoggerFactory.getLogger(TaskRepository.class);
-
     private final JdbcClient jdbcClient;
-
 
     public TaskRepository(JdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
@@ -31,7 +28,9 @@ public class TaskRepository {
                 .update();
     }
 
-//    public void updateTask(Task task) {}
+    public void updateTask(Task task) {
+        //TODO
+    }
 
     public void deleteTaskById(Integer id) {
         jdbcClient.sql("delete from tasks where id = :id").param("id", id).update();

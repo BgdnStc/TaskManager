@@ -36,12 +36,12 @@ public class TaskController {
     void addTask(@RequestBody Task task) {
         taskRepository.insertTask(task);
     }
-//
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @PutMapping("/{id}")
-//    void updateTask(@PathVariable int id, @RequestBody TaskC task) {
-//        taskRepository.updateTask(task);
-//    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PutMapping("/{id}")
+    void updateTask(@PathVariable int id, @RequestBody Task task) {
+        taskRepository.updateTask(task);
+    }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")

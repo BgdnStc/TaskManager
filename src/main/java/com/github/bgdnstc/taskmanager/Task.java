@@ -9,5 +9,4 @@ public record Task(
     Date dueDate,
     String personAssigned,
     String comment
-){
-}
+) {}
