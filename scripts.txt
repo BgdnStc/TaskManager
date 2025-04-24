@@ -1,0 +1,1 @@
+insert into tasks(id, title, description, due_Date, person_assigned, comment) values(1,'Complete project plan','Create and finalize the project timeline and deliverables.','2025-04-30 10:00:00','John Doe','Ensure to consult the team leads before final submission.');

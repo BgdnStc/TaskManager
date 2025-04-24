@@ -17,11 +17,11 @@ public class TaskController {
 
     @GetMapping("")
     List<Task> getTasks() {
-        return taskRepository.getAll();
+        return taskRepository.getTasks();
     }
 
     @GetMapping("/{id}")
-    Task getTask(@PathVariable int id) {
+    Task getTask(@PathVariable Integer id) {
         Task task = taskRepository.getTaskById(id);
         if (task == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -32,20 +32,20 @@ public class TaskController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+    @PostMapping("")
     void addTask(@RequestBody Task task) {
-        taskRepository.addTask(task);
+        taskRepository.insertTask(task);
     }
-
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/{id}")
-    void updateTask(@PathVariable int id, @RequestBody Task task) {
-        taskRepository.updateTask(task);
-    }
+//
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    @PutMapping("/{id}")
+//    void updateTask(@PathVariable int id, @RequestBody TaskC task) {
+//        taskRepository.updateTask(task);
+//    }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     void deleteTask(@PathVariable int id) {
-        taskRepository.deleteTask(id);
+        taskRepository.deleteTaskById(id);
     }
 }
