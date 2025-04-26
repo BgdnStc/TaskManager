@@ -18,13 +18,13 @@ public class TaskRepository {
     }
 
     public Task getTaskById(Integer id) {
-        return jdbcClient.sql("select id, title, description, due_Date, person_assigned, comment from tasks where id = :id")
+        return jdbcClient.sql("select * from tasks where id = :id")
                 .param("id", id).query(Task.class).single();
     }
 
     public void insertTask(Task task) {
-        jdbcClient.sql("insert into tasks(id, title, description, due_Date, person_assigned, comment) values(?,?,?,?,?,?)")
-                .params(List.of(task.id(), task.title(), task.description(), task.dueDate(), task.personAssigned(), task.comment()))
+        jdbcClient.sql("insert into tasks(title, description, due_Date, person_assigned, comment) values(?,?,?,?,?)")
+                .params(List.of(task.title(), task.description(), task.dueDate(), task.personAssigned(), task.comment()))
                 .update();
     }
 
@@ -34,13 +34,5 @@ public class TaskRepository {
 
     public void deleteTaskById(Integer id) {
         jdbcClient.sql("delete from tasks where id = :id").param("id", id).update();
-    }
-
-    public int count() {
-        return jdbcClient.sql("select * from tasks").query().listOfRows().size();
-    }
-
-    public void saveAll(List<Task> tasks) {
-        tasks.stream().forEach(this::insertTask);
     }
 }
