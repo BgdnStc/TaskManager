@@ -40,8 +40,14 @@ public class TaskController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/{id}")
     void updateTask(@PathVariable int id, @RequestBody Task task) {
-        taskRepository.updateTask(task);
+        taskRepository.updateTask(task, id);
     }
+
+//    @ResponseStatus(HttpStatus.ACCEPTED)
+//    @PutMapping("/{id}")
+//    void updateSubtask(@PathVariable int id, @RequestBody Task task) {
+//        taskRepository.updateSubtask(task, id);
+//    }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")

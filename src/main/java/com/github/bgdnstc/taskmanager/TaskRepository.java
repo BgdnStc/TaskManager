@@ -14,25 +14,45 @@ public class TaskRepository {
     }
 
     public List<Task> getTasks() {
-        return jdbcClient.sql("select * from Tasks;").query(Task.class).list();
+        return jdbcClient.sql("select * from Tasks;")
+                .query(Task.class)
+                .list();
     }
 
     public Task getTaskById(Integer id) {
         return jdbcClient.sql("select * from tasks where id = :id")
-                .param("id", id).query(Task.class).single();
+                .param("id", id)
+                .query(Task.class)
+                .single();
     }
 
     public void insertTask(Task task) {
-        jdbcClient.sql("insert into tasks(title, description, due_Date, person_assigned, comment) values(?,?,?,?,?)")
-                .params(List.of(task.title(), task.description(), task.dueDate(), task.personAssigned(), task.comment()))
+        if (task.parentTaskId() != null) {
+            jdbcClient.sql("insert into tasks(parent_task_id, title, description, due_Date, person_assigned, comment) values(?,?,?,?,?,?)")
+                    .params(List.of(task.parentTaskId(), task.title(), task.description(), task.dueDate(), task.personAssigned(), task.comment()))
+                    .update();
+        } else {
+            jdbcClient.sql("insert into tasks(parent_task_id, title, description, due_Date, person_assigned, comment) values(NULL,?,?,?,?,?)")
+                    .params(List.of(task.title(), task.description(), task.dueDate(), task.personAssigned(), task.comment()))
+                    .update();
+        }
+    }
+
+    public void updateTask(Task task, Integer id) {
+        jdbcClient.sql("update tasks set parent_task_id = ?, title = ?, description = ?, due_Date = ?, person_assigned = ? where id = ?")
+                .params(List.of(task.parentTaskId(), task.title(), task.description(), task.dueDate(), task.personAssigned(), id))
                 .update();
     }
 
-    public void updateTask(Task task) {
-        //TODO
-    }
+//    public void updateSubtask(Task task, Integer id) {
+//        jdbcClient.sql("update tasks set parent_task_id = ? where id = ?")
+//                .params(List.of(task.parentTaskId(), id))
+//                .update();
+//    }
 
     public void deleteTaskById(Integer id) {
-        jdbcClient.sql("delete from tasks where id = :id").param("id", id).update();
+        jdbcClient.sql("delete from tasks where id = :id")
+                .param("id", id)
+                .update();
     }
 }
