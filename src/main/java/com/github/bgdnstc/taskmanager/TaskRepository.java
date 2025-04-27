@@ -62,10 +62,15 @@ public class TaskRepository {
 //                .params(List.of(task.parentTaskId(), id))
 //                .update();
 //    }
-
     public void deleteTaskById(Integer id) {
         jdbcClient.sql("delete from tasks where id = :id")
                 .param("id", id)
                 .update();
+    }
+
+    public List<Task> getTasksByTitle() {
+        return jdbcClient.sql("select * from tasks order by title asc")
+                .query(Task.class)
+                .list();
     }
 }

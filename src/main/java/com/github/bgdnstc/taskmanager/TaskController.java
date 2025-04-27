@@ -15,11 +15,13 @@ public class TaskController {
         this.taskRepository = taskRepository;
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
     List<Task> getTasks() {
         return taskRepository.getTasks();
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     Task getTask(@PathVariable Integer id) {
         Task task = taskRepository.getTaskById(id);
@@ -53,5 +55,11 @@ public class TaskController {
     @DeleteMapping("/{id}")
     void deleteTask(@PathVariable int id) {
         taskRepository.deleteTaskById(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/title")
+    List<Task> getAllByTitle() {
+        return taskRepository.getTasksByTitle();
     }
 }
