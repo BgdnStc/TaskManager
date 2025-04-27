@@ -39,9 +39,22 @@ public class TaskRepository {
     }
 
     public void updateTask(Task task, Integer id) {
-        jdbcClient.sql("update tasks set parent_task_id = ?, title = ?, description = ?, due_Date = ?, person_assigned = ? where id = ?")
-                .params(List.of(task.parentTaskId(), task.title(), task.description(), task.dueDate(), task.personAssigned(), id))
-                .update();
+
+        if (task.parentTaskId() != null) {
+            jdbcClient.sql("update tasks set parent_task_id = ?, title = ?, description = ?, due_Date = ?, person_assigned = ? where id = ?")
+                    .params(List.of(task.parentTaskId(), task.title(), task.description(), task.dueDate(), task.personAssigned(), id))
+                    .update();
+        } else {
+            if (task.title() == null && task.description() == null && task.dueDate() == null && task.personAssigned() == null && task.comment() != null) {
+                jdbcClient.sql("update tasks set comment = ? where id = ?")
+                        .params(List.of(task.comment(), task.id()))
+                        .update();
+            } else {
+                jdbcClient.sql("update tasks set title = ?, description = ?, due_Date = ? where id = ?")
+                        .params(List.of(task.title(), task.description(), task.dueDate(), task.id()))
+                        .update();
+            }
+        }
     }
 
 //    public void updateSubtask(Task task, Integer id) {
