@@ -1,0 +1,50 @@
+// retrieve all records from the tasks table
+GET http://localhost:8080/api/tasks
+	pm.test("Status code is 200", function () {
+		pm.response.to.have.status(200);
+	});
+
+// retrieve one record from the tasks table, change the {id} with an existing record
+GET http://localhost:8080/api/tasks/{id}
+	pm.test("Status code is 200", function () {
+		pm.response.to.have.status(200);
+	});
+
+// insert one task
+POST http://localhost:8080/api/tasks
+	pm.test("Status code is 201", function () {
+		pm.response.to.have.status(201);
+	});
+	
+	body:
+	{
+		"title": "Taks title",
+		"description": "Inset a task",
+		"dueDate": "2025-04-30T10:00:00.000+00:00",
+		"personAssigned": "John Doe"
+	}
+
+// add a comment / update a task, change the {id} with an existing record
+PUT http://localhost:8080/api/tasks/{id}
+	pm.test("Status code is 202", function () {
+		pm.response.to.have.status(202);
+	});
+	
+	body:
+	{
+		"id": {id},
+		"comment": "this is a comment"
+	}
+	
+// delete a record, change the {id} with an existing record
+DELETE http://localhost:8080/api/tasks/{id}
+	pm.test("Status code is 203", function () {
+		pm.response.to.have.status(203);
+	});
+	
+// retrieve all records from the tasks table sorted by title
+GET http://localhost:8080/api/tasks/title
+	pm.test("Status code is 200", function () {
+		pm.response.to.have.status(200);
+	});
+	

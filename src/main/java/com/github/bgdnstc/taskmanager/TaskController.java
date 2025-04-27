@@ -30,8 +30,7 @@ public class TaskController {
         Task task = taskRepository.getTaskById(id);
         if (task == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        else {
+        } else {
             return task;
         }
     }
@@ -49,12 +48,6 @@ public class TaskController {
     void updateTask(@PathVariable int id, @RequestBody Task task) {
         taskRepository.updateTask(task, id);
     }
-
-//    @ResponseStatus(HttpStatus.ACCEPTED)
-//    @PutMapping("/{id}")
-//    void updateSubtask(@PathVariable int id, @RequestBody Task task) {
-//        taskRepository.updateSubtask(task, id);
-//    }
 
     // delete one record
     @ResponseStatus(HttpStatus.NO_CONTENT)
