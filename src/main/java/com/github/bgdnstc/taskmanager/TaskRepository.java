@@ -9,16 +9,19 @@ import java.util.List;
 public class TaskRepository {
     private final JdbcClient jdbcClient;
 
+    // controller constructor; behaviour given by the JdbcClient class with dependency injection
     public TaskRepository(JdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
     }
 
+    // query all tasks and list them
     public List<Task> getTasks() {
         return jdbcClient.sql("select * from Tasks;")
                 .query(Task.class)
                 .list();
     }
 
+    // query one task by id
     public Task getTaskById(Integer id) {
         return jdbcClient.sql("select * from tasks where id = :id")
                 .param("id", id)
@@ -26,6 +29,8 @@ public class TaskRepository {
                 .single();
     }
 
+    // insert a task in the tasks table, the task object is translated into a database record
+    // the inserted record can be either a task or a subtask, depending on the parentTaskId attribute
     public void insertTask(Task task) {
         if (task.parentTaskId() != null) {
             jdbcClient.sql("insert into tasks(parent_task_id, title, description, due_Date, person_assigned, comment) values(?,?,?,?,?,?)")
@@ -38,6 +43,8 @@ public class TaskRepository {
         }
     }
 
+    // update a record
+    // option to only add a comment to an existing task or subtask
     public void updateTask(Task task, Integer id) {
 
         if (task.parentTaskId() != null) {
@@ -62,12 +69,15 @@ public class TaskRepository {
 //                .params(List.of(task.parentTaskId(), id))
 //                .update();
 //    }
+
+    // remove one record from the database by their id
     public void deleteTaskById(Integer id) {
         jdbcClient.sql("delete from tasks where id = :id")
                 .param("id", id)
                 .update();
     }
 
+    // query the tasks records and order them alphabetically by title
     public List<Task> getTasksByTitle() {
         return jdbcClient.sql("select * from tasks order by title asc")
                 .query(Task.class)
