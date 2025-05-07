@@ -1,5 +1,6 @@
-package com.github.bgdnstc.taskmanager;
+package com.github.bgdnstc.taskmanager.repositories;
 
+import com.github.bgdnstc.taskmanager.records.Task;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 

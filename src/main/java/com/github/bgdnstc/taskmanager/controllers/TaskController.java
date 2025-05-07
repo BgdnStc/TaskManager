@@ -1,5 +1,7 @@
-package com.github.bgdnstc.taskmanager;
+package com.github.bgdnstc.taskmanager.controllers;
 
+import com.github.bgdnstc.taskmanager.records.Task;
+import com.github.bgdnstc.taskmanager.repositories.TaskRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;

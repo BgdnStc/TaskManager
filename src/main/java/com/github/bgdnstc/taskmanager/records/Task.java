@@ -1,4 +1,4 @@
-package com.github.bgdnstc.taskmanager;
+package com.github.bgdnstc.taskmanager.records;
 
 import java.util.Date;
 
